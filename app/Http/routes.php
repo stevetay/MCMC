@@ -19,3 +19,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('/login', [
+    "as" => 'login',
+    "uses" => "adminController@getLogin"
+]);
+
