@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
-
+use DB;
+use App\Quotation;
 class adminController extends Controller {
 
 	/*
@@ -12,7 +13,7 @@ class adminController extends Controller {
 	| controllers, you are free to modify or remove it as you desire.
 	|
 	*/
-
+	
 	/**
 	 * Create a new controller instance.
 	 *
@@ -28,9 +29,12 @@ class adminController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getLogin()
+	public function postFeed()
 	{
-		return view('admin');
+
+		DB::table('restaurantList')->insert(
+		    array('name' => 'stevrest', 'thumbnail' => "dropbox/abc.img")
+		);
 	}
 
 }

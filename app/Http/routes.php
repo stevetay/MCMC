@@ -15,13 +15,13 @@ Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
+Route::get('/postfeed', [
+    "as" => 'postfeed',
+    "uses" => "adminController@postFeed"
+]);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);
-
-Route::get('/login', [
-    "as" => 'login',
-    "uses" => "adminController@getLogin"
 ]);
 
