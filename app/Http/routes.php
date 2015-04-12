@@ -20,8 +20,23 @@ Route::get('/postfeed', [
     "uses" => "adminController@postFeed"
 ]);
 
+Route::group(array('before'=>'auth'), function()
+{
+	Route::group([ 'prefix'=>'api' ], function() {
+
+	    Route::post('/postrest', [
+	        "uses" => "ApiController@postRestaurant"
+	    ]);    
+
+	    Route::get('/getrest',[
+	    	"uses" => "ApiController@getRestaurant"
+    	]);
+	});
+});
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
 

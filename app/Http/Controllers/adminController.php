@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
+
 use DB;
 use App\Quotation;
+
 class adminController extends Controller {
 
 	/*
@@ -13,7 +15,7 @@ class adminController extends Controller {
 	| controllers, you are free to modify or remove it as you desire.
 	|
 	*/
-	
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -33,7 +35,9 @@ class adminController extends Controller {
 	{
 
 		DB::table('restaurantList')->insert(
-		    array('name' => 'stevrest', 'thumbnail' => "dropbox/abc.img")
+		    //array('name' => 'Restaurant 1', 'thumbnail' => "https://dl.dropboxusercontent.com/u/93617869/restaurant/restaurant1.jpg"),
+		    //array('name' => 'Restaurant 2', 'thumbnail' => "https://dl.dropboxusercontent.com/u/93617869/restaurant/restaurant2.jpg")
+		    array('name' => 'Restaurant 3', 'thumbnail' => "https://dl.dropboxusercontent.com/u/93617869/restaurant/restaurant3.jpg")
 		);
 	}
 
