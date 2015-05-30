@@ -64,35 +64,35 @@ class adminController extends Controller {
 
 		$results = DB::select('select * from advertisements');
 		// /dd($results);
-		if (empty(\Session::has('tempuser.token'))) {
-
-			return \Redirect::route('login');
-
-		} else {
+		if ((\Session::has('tempuser.token'))) {
 
 			return View('admin.table')->with([
             	'advertisements' => $results
         	]);
+		} else {
+
+			return \Redirect::route('login');
+
 		}
 	}
 
 
 	public function delete_ads($id) {
 
-		if (empty(\Session::has('tempuser.token'))) {
+		if ((\Session::has('tempuser.token'))) {
 
-			return \Redirect::route('login');
-
-		} else if(empty($id)) {
-
-			return "Error No ID!";
+			if($id){
+				DB::delete("delete from advertisements where adv_id = '".$id."' ");
+				return \Redirect::route('table');
+			} else {
+				return "Error! no id!";
+			}
 
 		} else {
 
-			DB::delete("delete from advertisements where adv_id = '".$id."' ");
-			return \Redirect::route('table');
+			return \Redirect::route('login');
 
-		}
+		} 
 
 	}
 }
