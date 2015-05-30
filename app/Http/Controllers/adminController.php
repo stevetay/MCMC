@@ -49,13 +49,13 @@ class adminController extends Controller {
 
 	public function dashbroad() {
 
-		if (empty(\Session::has('tempuser.token'))) {
+		if ((\Session::has('tempuser.token'))) {
 
-			return \Redirect::route('login');
+			return View('admin.dashbroad');
 
 		} else {
 
-			return View('admin.dashbroad');
+			return \Redirect::route('login');
 		}
 		
 	}
