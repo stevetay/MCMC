@@ -66,7 +66,7 @@ class ApiController extends Controller {
 
     public function loginAPI() {
 
-        if(Input::get('name')=="admin"&&sha1(Input::get('password'))==env('ADMIN', 'production')) {
+        if(Input::get('name')=="admin"&&sha1(Input::get('password'))=="05fe7461c607c33229772d402505601016a7d0eaz") {
 
             $return = \Response::json([
                 "status" =>  "ok",
