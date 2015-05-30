@@ -66,7 +66,7 @@ class ApiController extends Controller {
 
     public function loginAPI() {
 
-        if(Input::get('name')=="admin"&&sha1(Input::get('password'))=="05fe7461c607c33229772d402505601016a7d0eaz") {
+        if(Input::get('name')=="admin"&&sha1(Input::get('password'))==="05fe7461c607c33229772d402505601016a7d0ea") {
 
             $return = \Response::json([
                 "status" =>  "ok",
@@ -80,7 +80,7 @@ class ApiController extends Controller {
 
             return \Response::json([
                 'error' => true,
-                'message' => "Error, Invalid name or password"
+                'message' => "Error, Invalid name or password",
             ], 400);
 
         }
