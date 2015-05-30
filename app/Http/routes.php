@@ -22,6 +22,7 @@ Route::get('/postfeed', [
 
 Route::group(array('before'=>'auth'), function()
 {
+
 	Route::group([ 'prefix'=>'api' ], function() {
 
 	    Route::post('/postrest', [
@@ -31,12 +32,62 @@ Route::group(array('before'=>'auth'), function()
 	    Route::get('/getrest',[
 	    	"uses" => "ApiController@getRestaurant"
     	]);
+
 	});
 });
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+Route::get('/dashbroad', [
+	"as" => 'dashbroad',
+	"uses" => "adminController@dashbroad"
 ]);
 
 
+Route::get('/table', [
+	"as" => 'table',
+	"uses" => "adminController@table"
+]);
+
+Route::get('/ads/delete/{id}', [
+	"as" => 'delete_ads',
+	"uses" => "adminController@delete_ads"
+]);
+
+Route::get('/logout', [
+	"as" => 'logout',
+	"uses" => "adminController@logout"
+]);
+
+
+
+// Route::controllers([
+// 	'auth' => 'Auth\AuthController',
+// 	'password' => 'Auth\PasswordController',
+// ]);
+
+Route::get('fileentry', 'FileEntryController@index');
+Route::get('fileentry/get/{filename}', [
+	'as' => 'getentry', 'uses' => 'FileEntryController@get']);
+Route::post('fileentry/add',[ 
+        'as' => 'addentry', 'uses' => 'FileEntryController@add']);
+
+
+
+Route::get('login', [
+	'as' => 'login',
+	'uses' => 'adminController@get'
+]);
+
+Route::group([ 'prefix'=>'api/v1.0' ], function() {
+
+    Route::post('/login', [
+        "uses" => "ApiController@loginAPI"
+    ]);    
+
+    Route::post('/ads/post',
+     ['as' => 'postads', 'uses' => 'AdsController@post']
+    );
+
+    Route::get('/getads',[
+    	"uses" => "ApiController@getAds"
+	]);
+});

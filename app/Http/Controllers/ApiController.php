@@ -64,4 +64,45 @@ class ApiController extends Controller {
         );
     }
 
+    public function loginAPI() {
+
+        if(Input::get('name')=="admin"&&sha1(Input::get('password'))==env('ADMIN')) {
+
+            $return = \Response::json([
+                "status" =>  "ok",
+                "message" => "Sucessfull Login!"
+            ], 200);
+            \Session::put('tempuser.token', sha1(Input::get('password')) );
+
+            return $return;
+
+        } else {
+
+            return \Response::json([
+                'error' => true,
+                'message' => "Error, Invalid name or password"
+            ], 400);
+
+        }
+
+    }
+
+    public function getAds() {
+
+        // Make sure current user owns the requested resource
+        $results = DB::select('select * from advertisements');
+
+        for ($i = 0, $c = count($results); $i < $c; ++$i) {
+            $results[$i] = (array) $results[$i];
+        }
+
+        //return $results->toArray();
+        return \Response::json(array(
+            'error' => false,
+            'results' => $results),
+            200
+        );
+
+    }
+
 }
