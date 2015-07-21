@@ -92,7 +92,7 @@ return [
 			'prefix'    => '',
 			'strict'    => false,
 			'options' => array(
-			    'db' => 'admin' // sets the authentication database required by mongo 3
+			    'db' => 'api' // sets the authentication database required by mongo 3
 			)
 		],
 
