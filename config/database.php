@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'default' => env('DB_DRIVER', 'mysql'),
+	'default' => env('DB_DRIVER', 'mongodb'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,23 @@ return [
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
-		]
+		],
+
+		'mongodb' => [
+			'driver'    => 'mongodb',
+			'host'      => env('DB_HOST', env('OPENSHIFT_MONGODB_DB_HOST', '192.168.10.10')),
+			'port'      => env('DB_PORT', env('OPENSHIFT_MONGODB_DB_PORT', 27017)),
+			'database'  => env('DB_DATABASE', env('OPENSHIFT_APP_NAME', 'admin')),
+			'username'  => env('DB_USERNAME', env('OPENSHIFT_MONGODB_DB_USERNAME', 'homestead')),
+			'password'  => env('DB_PASSWORD', env('OPENSHIFT_MONGODB_DB_PASSWORD', 'secret')),
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+			'strict'    => false,
+			'options' => array(
+			    'db' => 'admin' // sets the authentication database required by mongo 3
+			)
+		],
 
 	],
 

@@ -7,6 +7,8 @@ use Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
+
+use Jenssegers\Mongodb\Model;
  
 class AdsController extends Controller {
  
@@ -36,7 +38,7 @@ class AdsController extends Controller {
 			$extension = $file->getClientOriginalExtension();
 
 			$destinationPath = 'upload/';
-			$filename = $file->getFilename().'.'.$extension. '.' . \Input::file('filefield')->getClientOriginalExtension();
+			$filename = $file->getFilename().'.'.$extension;
 			$moved = \Input::file('filefield')->move($destinationPath, $filename);
 
 			//Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
@@ -49,6 +51,8 @@ class AdsController extends Controller {
 			$entry->adv_expdate = strtotime(Request::input('dateFrom'));
 
 			$entry->save();
+
+			
 
 			$return = \Response::json([
 			     "status" => "ok",
