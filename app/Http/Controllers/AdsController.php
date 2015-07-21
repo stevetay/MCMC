@@ -29,7 +29,7 @@ class AdsController extends Controller {
 
 		// $errors = array_filter(Request::all());
 		// var_dump($errors);
-		// exit; 
+		// exit;
 
 		if (Request::has('title') && Request::has('desc') && Request::has('dateFrom') && Request::hasFile('filefield')  ) {
 
