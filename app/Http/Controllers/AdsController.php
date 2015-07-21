@@ -25,7 +25,7 @@ class AdsController extends Controller {
 	// 	return view('fileentries.index', compact('entries'));
 	// }
  
-	public function post() {
+	public function post() { 
 
 		// $errors = array_filter(Request::all());
 		// var_dump($errors);
