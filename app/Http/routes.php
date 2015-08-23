@@ -87,7 +87,35 @@ Route::group([ 'prefix'=>'api/v1.0' ], function() {
      ['as' => 'postads', 'uses' => 'AdsController@post']
     );
 
+    Route::post('/ads/editSched',
+     ['as' => 'editSched', 'uses' => 'AdsController@editScheduled']
+    );
+
+    Route::post('/ads/editSolved',
+     ['as' => 'editSolved', 'uses' => 'AdsController@editSolved']
+    );
+
+    Route::post('/uploadPhoto',
+     ['as' => 'uploadPhoto', 'uses' => 'AdsController@uploadPhoto']
+    );   
+
+    Route::post('/uploadPhoto/solved',
+     ['as' => 'uploadSolved', 'uses' => 'AdsController@uploadSolved']
+    );     
+
     Route::get('/getads',[
     	"uses" => "ApiController@getAds"
+	]);
+
+    Route::get('/getFilterComplain',[
+    	"uses" => "ApiController@getFilterComplain"
+	]);
+
+	Route::post('/postFollower',[
+		'as' => 'postFollower', 'uses' => 'AdsController@postFollower'
+	]);
+
+    Route::get('/getOwnFollower',[
+    	"uses" => "ApiController@getOwnFollower"
 	]);
 });

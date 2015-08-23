@@ -33,7 +33,7 @@ class FileEntryController extends Controller {
  
 		$entry->save();
  
-		return redirect('fileentry');
+		return $file->getFilename().'.'.$extension;
 		
 	}
 
