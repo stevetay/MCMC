@@ -77,45 +77,53 @@ Route::get('login', [
 	'uses' => 'adminController@get'
 ]);
 
-Route::group([ 'prefix'=>'api/v1.0' ], function() {
+// Route::group([ 'prefix'=>'api/v1.0' ], function() {
 
-    Route::post('/login', [
-        "uses" => "ApiController@loginAPI"
-    ]);    
+//     Route::post('/login', [
+//         "uses" => "ApiController@loginAPI"
+//     ]);    
 
-    Route::post('/ads/post',
-     ['as' => 'postads', 'uses' => 'AdsController@post']
-    );
+//     Route::post('/ads/post',
+//      ['as' => 'postads', 'uses' => 'AdsController@post']
+//     );
 
-    Route::post('/ads/editSched',
-     ['as' => 'editSched', 'uses' => 'AdsController@editScheduled']
-    );
+//     Route::post('/ads/editSched',
+//      ['as' => 'editSched', 'uses' => 'AdsController@editScheduled']
+//     );
 
-    Route::post('/ads/editSolved',
-     ['as' => 'editSolved', 'uses' => 'AdsController@editSolved']
-    );
+//     Route::post('/ads/editSolved',
+//      ['as' => 'editSolved', 'uses' => 'AdsController@editSolved']
+//     );
 
-    Route::post('/uploadPhoto',
-     ['as' => 'uploadPhoto', 'uses' => 'AdsController@uploadPhoto']
-    );   
+//     Route::post('/uploadPhoto',
+//      ['as' => 'uploadPhoto', 'uses' => 'AdsController@uploadPhoto']
+//     );   
 
-    Route::post('/uploadPhoto/solved',
-     ['as' => 'uploadSolved', 'uses' => 'AdsController@uploadSolved']
-    );     
+//     Route::post('/uploadPhoto/solved',
+//      ['as' => 'uploadSolved', 'uses' => 'AdsController@uploadSolved']
+//     );     
 
-    Route::get('/getads',[
-    	"uses" => "ApiController@getAds"
-	]);
+//     Route::get('/getads',[
+//     	"uses" => "ApiController@getAds"
+// 	]);
 
-    Route::get('/getFilterComplain',[
-    	"uses" => "ApiController@getFilterComplain"
-	]);
+//     Route::get('/getFilterComplain',[
+//     	"uses" => "ApiController@getFilterComplain"
+// 	]);
 
-	Route::post('/postFollower',[
-		'as' => 'postFollower', 'uses' => 'AdsController@postFollower'
-	]);
+// 	Route::post('/postFollower',[
+// 		'as' => 'postFollower', 'uses' => 'AdsController@postFollower'
+// 	]);
 
-    Route::get('/getOwnFollower',[
-    	"uses" => "ApiController@getOwnFollower"
-	]);
-});
+//     Route::get('/getOwnFollower',[
+//     	"uses" => "ApiController@getOwnFollower"
+// 	]);
+// });
+
+Route::post('/register', [
+    "uses" => "ApiController@register"
+]);
+
+Route::post('/login', [
+    "uses" => "ApiController@login"
+]);

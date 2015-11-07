@@ -5,6 +5,7 @@ use Request;
 use DB;
 use App\Quotation;
 use App\Complain;
+use App\Seeties\Users\Auth;
 
 class ApiController extends Controller {
 
@@ -168,6 +169,53 @@ class ApiController extends Controller {
             return $return;
         }
 
+    }
+
+    public function register() {
+
+        $input = \Input::get();
+        $data = array();
+
+        if (Input::hasFile('userPicture'))
+        {
+            $file = Request::file('userPicture');
+            $extension = $file->getClientOriginalExtension();
+            $destinationPath = 'upload/';
+            $filename = $file->getFilename().'.'.$extension;
+            $moved = \Input::file('userPicture')->move($destinationPath, $filename);
+            $file->getClientMimeType();
+
+            $input['userPicture'] = "upload/".$filename;
+
+            $data = Auth::createUser($input);
+
+        } else {
+
+            $return = \Response::json([
+                 "status"=> 400 ,
+                 "errorMessage"=> "No a file type",
+            ], 400 );
+
+            return $return;
+        }
+        
+        $result['userID'] = $data['_id'];
+        $result['userName'] = $data['username'];
+        $result['userEmail'] = $data['email'];
+        $result['userPicture'] = $data['picture'];
+        $output = \Response::json( $result , 200);
+
+        return $output;
+
+    }
+
+    public function login() {
+
+        $result['userID'] = \Session::get('userID');
+
+        $output = \Response::json( $result , 200);
+
+        return $output;
     }
 
 
