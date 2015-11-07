@@ -127,3 +127,11 @@ Route::post('/register', [
 Route::post('/login', [
     "uses" => "ApiController@login"
 ]);
+
+Route::post('/logout', [
+    "uses" => "ApiController@logout"
+]);
+
+Route::post('/checksession', [
+    "uses" => "ApiController@checksession"
+]);

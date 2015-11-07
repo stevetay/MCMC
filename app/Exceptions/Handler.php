@@ -38,13 +38,19 @@ class Handler extends ExceptionHandler {
 	public function render($request, Exception $e)
 	{
 		//return parent::render($request, $e);
-		//dd($request);
+		
 		if($e->getCode()) {
+
+			if($e->getCode() > 100) {
+				$error = $e->getCode();
+			} else {
+				$error = http_response_code();
+			}
+
 	    	$return = \Response::json([
 	             "status"=> $e->getCode(),
-	             //"errorData" => $e->data,
- 	             "errorMessage"=> $e->getMessage(),
-	    	], $e->getCode() );
+ 	             "message"=> $e->getMessage(),
+	    	], $error );
 
 	    	return $return;
 		}
@@ -96,7 +102,7 @@ class Handler extends ExceptionHandler {
 
 	    	$return = \Response::json([
 	             "status"=> $e->getStatusCode(),
-	             "statusMessage" => $text,
+	             "message" => $text,
 	             //"statusMessage" => http_response_code($e->getMessage()),
  	             "errorMessage"=> $e->getMessage(),
 	    	], $e->getStatusCode());
@@ -106,7 +112,7 @@ class Handler extends ExceptionHandler {
 
 		$return = \Response::json([
 	         "status"=> http_response_code(),
-	         "errorMessage"=> $e->getMessage(),
+	         "message"=> $e->getMessage(),
 		], http_response_code());
 
 		return $return;	

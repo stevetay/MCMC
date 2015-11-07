@@ -193,7 +193,7 @@ class ApiController extends Controller {
 
             $return = \Response::json([
                  "status"=> 400 ,
-                 "errorMessage"=> "No a file type",
+                 "message"=> "No a file type",
             ], 400 );
 
             return $return;
@@ -211,12 +211,49 @@ class ApiController extends Controller {
 
     public function login() {
 
-        $result['userID'] = \Session::get('userID');
+        $input = \Input::get();
+
+        $data = Auth::loginUser($input);
+       
+        $result['userID'] = $data['_id']->{'$id'};
+        $result['userName'] = $data['username'];
+        $result['userEmail'] = $data['email'];
+        $result['userPicture'] = $data['picture'];
 
         $output = \Response::json( $result , 200);
 
         return $output;
     }
+
+    public function logout() {
+
+        \Session::forget('userID');
+
+        $return = \Response::json([
+             "message"=> "Session logout!",
+        ], 200 );
+
+        return $return;
+    }
+
+    public function checksession() {
+        
+        if(\Session::get("userID")){
+
+            return \Session::get("userID");
+
+        } else {
+
+            $return = \Response::json([
+                 "status"=> 400 ,
+                 "message"=> "No Session",
+            ], 400 );
+
+            return $return;
+        }
+        
+    }
+
 
 
 }

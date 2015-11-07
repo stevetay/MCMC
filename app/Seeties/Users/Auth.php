@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Seeties\Users;
-
+use DB;
 use App\Models\Users\UsersModel;
 use App\Seeties\Utils\Utils;
 use App\Seeties\Exceptions\AuthCheckException;
@@ -42,6 +42,32 @@ class Auth
 
     }
 
+    private static function login(array $data)
+    {   
+        if (self::validateLogin($data)) {
+            $user = new UsersModel();
+
+            $result = DB::collection('user')->where('email', $data['userEmail'] )->get();
+            
+            if($result){
+                if($result[0]['password']==sha1($data['userPassword'])) {
+
+                    \Session::put('userID', $result[0]['_id']->{'$id'} );
+
+                    return $result[0];
+
+                } else {
+
+                    throw new AuthCheckException('password', 'auth.password.incorrect');
+                }   
+            } else {
+
+                throw new AuthCheckException('username', 'auth.no.username');
+
+            }
+        }
+    }
+
     public static function createUser(array $data)
     {
 
@@ -61,6 +87,35 @@ class Auth
         return $new_user_info;
     }
 
+    public static function loginUser(array $data)
+    {
+
+        // create user with form
+        $required_fields = array(
+            'userEmail',
+            'userPassword',
+            'appKey'
+        );
+
+        Utils::arrayKeyRequired($required_fields, $data);
+
+        $new_user_info = self::login($data);
+
+        return $new_user_info;
+    }
+
+    public static function validateLogin(array $data)
+    {
+ 
+        $data['userEmail'] = (string) trim($data['userEmail']);
+        //$data['userName'] = (string) trim(strtolower($data['userName']));
+        
+        self::validateAppKey($data['appKey']);
+        self::validateEmail($data['userEmail'] , "login");
+        self::validatePassword($data['userPassword']);
+
+        return true;
+    }
 
     public static function validateRegister(array $data)
     {
@@ -111,7 +166,7 @@ class Auth
         return true;
     }
 
-    public static function validateEmail($email)
+    public static function validateEmail($email , $type)
     {
       
         $email_name = substr($email, 0, strpos($email, '@'));
@@ -125,14 +180,16 @@ class Auth
            throw new AuthCheckException('email', 'email is not valid');
         }
 
-        $query = array(
-                'email' => new \MongoRegex('/'.$email.'$/i'),
-        );
+        if($type!="login") {
+            $query = array(
+                    'email' => new \MongoRegex('/'.$email.'$/i'),
+            );
 
-        $user = UsersModel::where($query)->first();
+            $user = UsersModel::where($query)->first();
 
-        if ($user) {
-            throw new AuthCheckException('email', 'auth.email.exist');
+            if ($user) {
+                throw new AuthCheckException('email', 'auth.email.exist');
+            }
         }
 
         return true;
