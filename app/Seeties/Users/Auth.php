@@ -122,10 +122,10 @@ class Auth
  
         $data['userEmail'] = (string) trim($data['userEmail']);
         $data['userName'] = (string) trim(strtolower($data['userName']));
-        
+        //dd($data);
         self::validateAppKey($data['appKey']);
         self::validateUsername($data['userName']);
-        self::validateEmail($data['userEmail']);
+        self::validateEmail($data['userEmail'], "register");
         self::validatePassword($data['userPassword']);
 
         return true;
