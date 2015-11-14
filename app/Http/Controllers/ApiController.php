@@ -9,6 +9,8 @@ use App\Seeties\Users\Auth;
 
 class ApiController extends Controller {
 
+    const COOKIE_EXPIRE = 43200;
+
     public function postRestaurant() {
 
         if(Input::get('token')=="123qwe" && Input::hasFile('image')) {
@@ -205,7 +207,7 @@ class ApiController extends Controller {
         $result['userPicture'] = $data['picture'];
         $output = \Response::json( $result , 200);
 
-        return $output;
+        return $output->withCookie(Cookie::make('userID', $data['_id'], self::COOKIE_EXPIRE));
 
     }
 
@@ -222,7 +224,7 @@ class ApiController extends Controller {
 
         $output = \Response::json( $result , 200);
 
-        return $output;
+        return $output->withCookie(Cookie::make('userID', $data['_id'], self::COOKIE_EXPIRE));
     }
 
     public function logout() {
@@ -233,7 +235,7 @@ class ApiController extends Controller {
              "message"=> "Session logout!",
         ], 200 );
 
-        return $return;
+        return $return->withCookie(Cookie::forget('userID'));
     }
 
     public function checksession() {
