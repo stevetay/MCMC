@@ -5,6 +5,7 @@ use DB;
 use App\Models\Users\UsersModel;
 use App\Seeties\Utils\Utils;
 use App\Seeties\Exceptions\AuthCheckException;
+use App\Seeties\checkAuth\validateAuth;
 
 class Auth
 {
@@ -110,7 +111,7 @@ class Auth
         $data['userEmail'] = (string) trim($data['userEmail']);
         //$data['userName'] = (string) trim(strtolower($data['userName']));
         
-        self::validateAppKey($data['appKey']);
+        validateAuth::validateAppKey($data['appKey']);
         self::validateEmail($data['userEmail'] , "login");
         self::validatePassword($data['userPassword']);
 
@@ -123,21 +124,12 @@ class Auth
         $data['userEmail'] = (string) trim($data['userEmail']);
         $data['userName'] = (string) trim(strtolower($data['userName']));
         //dd($data);
-        self::validateAppKey($data['appKey']);
+        validateAuth::validateAppKey($data['appKey']);
         self::validateUsername($data['userName']);
         self::validateEmail($data['userEmail'], "register");
         self::validatePassword($data['userPassword']);
 
         return true;
-    }
-
-    public static function validateAppKey($appkey){
-
-        if(sha1($appkey)=="05fe7461c607c33229772d402505601016a7d0ea"){
-            return true;
-        } else {
-            throw new AuthCheckException('appkey', 'auth.appkey.invalid');
-        }
     }
 
     public static function validateUsername($username)

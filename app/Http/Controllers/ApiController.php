@@ -201,13 +201,13 @@ class ApiController extends Controller {
             return $return;
         }
         
-        $result['userID'] = $data['_id'];
+        $result['userID'] = $data['_id']->{'$id'};
         $result['userName'] = $data['username'];
         $result['userEmail'] = $data['email'];
         $result['userPicture'] = $data['picture'];
         $output = \Response::json( $result , 200);
 
-        return $output->withCookie(Cookie::make('userID', $data['_id'], self::COOKIE_EXPIRE));
+        return $output->withCookie(\Cookie::make('userID', $data['_id']->{'$id'} , self::COOKIE_EXPIRE));
 
     }
 
@@ -224,7 +224,7 @@ class ApiController extends Controller {
 
         $output = \Response::json( $result , 200);
 
-        return $output->withCookie(Cookie::make('userID', $data['_id'], self::COOKIE_EXPIRE));
+        return $output->withCookie(\Cookie::make('userID', $data['_id']->{'$id'} , self::COOKIE_EXPIRE));
     }
 
     public function logout() {
@@ -235,7 +235,7 @@ class ApiController extends Controller {
              "message"=> "Session logout!",
         ], 200 );
 
-        return $return->withCookie(Cookie::forget('userID'));
+        return $return->withCookie(\Cookie::forget('userID'));
     }
 
     public function checksession() {

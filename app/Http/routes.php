@@ -36,28 +36,15 @@
 // 	});
 // });
 
-// Route::get('/dashbroad', [
-// 	"as" => 'dashbroad',
-// 	"uses" => "adminController@dashbroad"
-// ]);
-
-
-// Route::get('/table', [
-// 	"as" => 'table',
-// 	"uses" => "adminController@table"
-// ]);
-
 // Route::get('/ads/delete/{id}', [
 // 	"as" => 'delete_ads',
 // 	"uses" => "adminController@delete_ads"
 // ]);
 
-// Route::get('/logout', [
-// 	"as" => 'logout',
-// 	"uses" => "adminController@logout"
-// ]);
-
-
+Route::get('/logout', [
+	"as" => 'logout',
+	"uses" => "adminController@logout"
+]);
 
 // // Route::controllers([
 // // 	'auth' => 'Auth\AuthController',
@@ -72,9 +59,19 @@
 
 
 
+Route::get('/dashbroad', [
+    "as" => 'dashbroad',
+    "uses" => "adminController@dashbroad"
+]);
+
+Route::get('/table', [
+    "as" => 'table',
+    "uses" => "adminController@table"
+]);
+
 Route::get('login', [
-	'as' => 'login',
-	'uses' => 'adminController@get'
+	'as' => 'loginAdmin',
+	'uses' => 'publicController@get'
 ]);
 
 Route::group([ 'prefix'=>'api/v1.0' ], function() {
@@ -83,9 +80,9 @@ Route::group([ 'prefix'=>'api/v1.0' ], function() {
         "uses" => "ApiController@loginAPI"
     ]);    
 
- //    Route::post('/ads/post',
- //     ['as' => 'postads', 'uses' => 'AdsController@post']
- //    );
+    Route::post('/ads/post',
+     ['as' => 'postads', 'uses' => 'adminController@getPost']
+    );
 
  //    Route::post('/ads/editSched',
  //     ['as' => 'editSched', 'uses' => 'AdsController@editScheduled']
@@ -120,18 +117,31 @@ Route::group([ 'prefix'=>'api/v1.0' ], function() {
 	// ]);
 });
 
-Route::post('/register', [
-    "uses" => "ApiController@register"
-]);
 
-Route::post('/login', [
-    "uses" => "ApiController@login"
-]);
+Route::group([ 'prefix'=>'api/v1.1' ], function() {
 
-Route::post('/logout', [
-    "uses" => "ApiController@logout"
-]);
+    Route::post('/register', [
+        "uses" => "ApiController@register"
+    ]);
 
-Route::post('/checksession', [
-    "uses" => "ApiController@checksession"
-]);
+    Route::post('/login', [
+        "as" => "apilogin",
+        "uses" => "ApiController@login"
+    ]);
+
+    Route::post('/logout', [
+        "uses" => "ApiController@logout"
+    ]);
+
+    Route::post('/checksession', [
+        "uses" => "ApiController@checksession"
+    ]);
+
+    Route::get('/getAdv', [
+        "uses" => "AdsController@getFeed"
+    ]);
+
+});
+
+
+

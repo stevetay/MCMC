@@ -2,8 +2,10 @@
 
 use DB;
 use App\Quotation;
+use App\Seeties\Ads\Auth;
 
-class adminController extends Controller {
+
+class adminController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -21,10 +23,25 @@ class adminController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
-		$this->middleware('guest');
+	// public function __construct()
+	// {
+	// 	$this->middleware('guest');
+	// }
+
+	public function getPost() {
+		
+		// /dd(\Cookie::get('userID'));
+		$input = \Input::all();
+		$data = array();
+
+		$data = Auth::createAds($input);
+
+		$output = \Response::json( $data , 200);
+
+		return $output;
+
 	}
+	
 
 	/**
 	 * Show the application welcome screen to the user.
@@ -41,23 +58,11 @@ class adminController extends Controller {
 		);
 	}
 
-	public function get() 
-	{
-		//var_dump("test");
-		return View('admin.index');
-	}
-
 	public function dashbroad() {
 
-		if ((\Session::has('tempuser.token'))) {
 
-			return View('admin.dashbroad');
+		return View('admin.dashbroad');
 
-		} else {
-
-			return \Redirect::route('login');
-		}
-		
 	}
 
 	public function table() {
@@ -93,6 +98,13 @@ class adminController extends Controller {
 			return \Redirect::route('login');
 
 		} 
+
+	}
+
+	public function logout() {
+
+		\Session::forget('tempuser.token');
+		return \Redirect::route('login');
 
 	}
 }
