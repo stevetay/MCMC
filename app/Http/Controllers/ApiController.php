@@ -201,13 +201,14 @@ class ApiController extends Controller {
             return $return;
         }
         
-        $result['userID'] = $data['_id']->{'$id'};
+        $result['userID'] = $data['_id'];
         $result['userName'] = $data['username'];
         $result['userEmail'] = $data['email'];
         $result['userPicture'] = $data['picture'];
+
         $output = \Response::json( $result , 200);
 
-        return $output->withCookie(\Cookie::make('userID', $data['_id']->{'$id'} , self::COOKIE_EXPIRE));
+        return $output->withCookie(\Cookie::make('userID', $data['_id'] , self::COOKIE_EXPIRE));
 
     }
 
